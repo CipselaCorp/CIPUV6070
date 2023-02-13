@@ -3,11 +3,11 @@ function getUVI(uv: number) {
     uvi = uvi * 0.04
     return uvi
 }
-function init() {
-    setReg(VEML6070_ADDR_ARA)
+function init_uv() {
+    set_Reg_uv(VEML6070_ADDR_ARA)
     basic.pause(10)
 }
-function setReg(command: number) {
+function set_Reg_uv(command: number) {
     let buf = pins.createBuffer(2);
     // basic.pause(10)
     // basic.pause(10)
@@ -34,7 +34,7 @@ refVal = 0.4
 //% color=#9C36B5 weight=25 icon="\uf005" block="CIPUV6070"
 
 namespace CIPUV {
-    init();
+    init_uv();
     /**
         * Returns a number describing the UV radiation(UVI) 
     */
@@ -42,14 +42,14 @@ namespace CIPUV {
     //% block="Leer UV"
     export function UVI(): number {
 
-        setReg(MSB);
+        set_Reg_uv(MSB);
         basic.pause(100);
         let i2cBuffer = pins.i2cReadBuffer(VEML6070_ADDR_L, pins.sizeOf(NumberFormat.UInt8LE) * 7, false);
         let result = i2cBuffer[0] << 8;
         result |= i2cBuffer[1];
         //basic.showNumber(result);
         basic.pause(100);
-        setReg(LSB);
+        set_Reg_uv(LSB);
         basic.pause(100);
         let i2cBuff = pins.i2cReadBuffer(VEML6070_ADDR_L, pins.sizeOf(NumberFormat.UInt8LE) * 7, false);
         let res = i2cBuff[0] << 8;
