@@ -17,6 +17,15 @@ function set_Reg_uv(command: number) {
     buf[1] = command & 0x03
     return pins.i2cWriteBuffer(VEML6070_ADDR_L, buf)
 }
+
+function trunc_VELM(x: number, posiciones: number): number {
+    let s = x.toString()
+    let l = s.length
+    let decimalLength = s.indexOf('.') + 1
+    let numStr = s.substr(0, decimalLength + posiciones)
+    return parseFloat(numStr)
+}
+
 let uvi = 0
 let refVal = 0
 let VEML6070_ADDR_ARA = 0
@@ -58,6 +67,6 @@ namespace CIPUV {
         //basic.showNumber(getUVI(res + result));
         fnl = getUVI(res + result);
         //basic.pause(1000);
-        return fnl
+        return trunc_VELM(fnl, 2)
     }
 }
